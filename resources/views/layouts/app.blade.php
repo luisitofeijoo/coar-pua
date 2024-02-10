@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     @vite('resources/scss/app.scss')
 </head>
 <body>
@@ -54,6 +53,7 @@
                         <li><a href="{{ url('/reporte/postulantes/user') }}" class="{{ request()->is('reporte/postulantes/user') ? 'is-active' : '' }}">Mis asistencias registradas</a></li>
                         <li><a href="{{ url('/reporte/postulantes') }}" class="{{ request()->is('reporte/postulantes') ? 'is-active' : '' }}">Asistencia general de postulantes</a></li>
                         <li><a href="{{ url('/reporte/aula') }}" class="{{ request()->is('reporte/aula') ? 'is-active' : '' }}">Asistencia por aulas</a></li>
+                        <li><a href="{{ url('/reporte/asistencia/resumen') }}" class="{{ request()->is('reporte/asistencia/resumen') ? 'is-active' : '' }}">Resumen general</a></li>
                     </ul>
                 </li>
 

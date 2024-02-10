@@ -4,6 +4,7 @@ import Reloj from './Reloj';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CircleSpinnerOverlay, FerrisWheelSpinner } from 'react-spinner-overlay'
 
 export default function Asistencia() {
 
@@ -20,6 +21,7 @@ export default function Asistencia() {
     const [search, setSearch] = useState('');
     const [asistencia, setAsistencia] = useState(null);
     const [busquedaEnProceso, setBusquedaEnProceso] = useState(false);
+    const [isActiveDelete, setIsActiveDelete] = useState(false);
 
     const inputBuscarRef = useRef(null);
 
@@ -46,6 +48,41 @@ export default function Asistencia() {
             });
         }
     };
+
+    const handleEliminarRegistro = async () => {
+        if(confirm('¡CUIDADO! Esta apunto de eliminar el registro de asistencia del postulante: *'+asistencia.postulante.dni+' | '+asistencia.postulante.nombres+' '+asistencia.postulante.apellidos+', ¿Desea continuar?')) {
+            setIsActiveDelete(true);
+            try {
+                const response = await axios.post('/api/asistencia/eliminar/'+asistencia.asistencia.id);
+                const data = response.data;
+                setAsistencia(null);
+                inputBuscarRef.current.focus();
+                toast.success('Registro del postulante eliminado correctamente.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            } catch (error) {
+                toast.error('Ocurrio un error, nose pudo eliminar el registro de asistencia del postulante.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            } finally  {
+                setIsActiveDelete(false);
+            }
+        }
+    }
 
     const buscarPersona = async (dni) => {
 
@@ -99,6 +136,13 @@ export default function Asistencia() {
 
     return (
         <>
+            {isActiveDelete && (<>
+                <CircleSpinnerOverlay
+                loading={isActiveDelete}
+                overlayColor="rgba(255,255,255,0.8)"
+                message={"Procesando, espere un momento porfavor..."}
+                /></>
+            )}
             <ToastContainer />
             <div className="container">
                 <div className="field has-addons">
@@ -126,7 +170,7 @@ export default function Asistencia() {
                     </div>
                 )}
 
-                {asistencia && (
+                {asistencia && (<>
                     <article className={"panel "+estadoClases[asistencia.estado]}>
                         <p className="panel-heading has-text-centered">
                             {asistencia.mensaje}
@@ -158,7 +202,6 @@ export default function Asistencia() {
                                                 <small className="is-size-7 has-text-weight-bold">FECHA DE REGISTRO:</small> <br/>
                                                 <span className="is-size-5 has-text-weight-medium has-text-danger-dark"> {asistencia.asistencia?.fecha_asistencia?? 'No registrado'}</span> <br/>
                                             </div>
-
                                             <div className="square  is-inline-block is-align-items-center m-2">
                                                 <p className="has-text-centered m-0 p-0 is-size-5">PABELLÓN</p>
                                                 <p className="has-text-centered text-size-aula m-0 p-0">{asistencia.postulante.pabellon}</p>
@@ -173,6 +216,20 @@ export default function Asistencia() {
                             </div>
                         </div>
                     </article>
+                    <div className='has-text-centered'>
+                        {estadoClases[asistencia.estado] === 'is-success' && (<>
+                            <article class="message is-warning">
+  <div class="message-body">
+  <i><strong>Nota:</strong> Solo utilizar el botón <em>eliminar</em> si tuvo una equivocación en el registro.</i>
+    <a className='has-text-centered' onClick={handleEliminarRegistro}> <strong className='pl-2 has-text-link'>Eliminar</strong></a>
+  </div>
+</article>
+
+
+
+                        </>)}
+                    </div>
+                    </>
                 )}
             </div>
         </>

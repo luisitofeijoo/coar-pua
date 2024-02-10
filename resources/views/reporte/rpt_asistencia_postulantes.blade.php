@@ -19,6 +19,7 @@
                 <td>{{ $asistencia->postulante->nombres }}, {{ $asistencia->postulante->apellidos }}</td>
                 <td class="has-text-centered">Aula {{ $asistencia->postulante->aula }}</td>
                 <td>{{ $asistencia->fecha_asistencia }}</td>
+                <td>{{ $asistencia->user_id }}</td>
             </tr>
         @endforeach
         </tbody>

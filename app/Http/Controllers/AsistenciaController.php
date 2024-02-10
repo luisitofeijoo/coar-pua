@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ConfiguracionAsistencia;
 use App\Models\Postulante;
 use App\Models\Asistencia;
 use App\Models\Programacion;
@@ -10,6 +9,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 class AsistenciaController extends Controller
 {
     public function save($dni)
@@ -98,7 +98,7 @@ class AsistenciaController extends Controller
 
         $asistencias = Asistencia::with('postulante')
             ->whereHas('postulante', function ($query) use ($programacion) {
-                $query->where('programacion_id', $programacion->id);
+                $query->where('programacion_id', $programacion->id);;
             })
             ->orderBy('fecha_asistencia', 'desc')->get();
         return view('reporte.rpt_asistencia_postulantes', compact('asistencias'));
@@ -136,5 +136,35 @@ class AsistenciaController extends Controller
         Programacion::where('id', '!=', $programacionId)->update(['estado' => 0]);
 
         return redirect(route('page_programacion'));
+    }
+
+    public function resumen_asistencia()
+    {
+        $programacion = Programacion::where('estado', 1)
+            ->first();
+        if($programacion) {
+            $consultaSQL = "
+                SELECT
+                    p.aula,
+                    COUNT(p.id) as total_postulantes_habilitados,
+                    COUNT(a.id) as total_postulantes_con_asistencia,
+                    (COUNT(p.id) - COUNT(a.id)) as total_postulantes_faltantes
+                FROM
+                    postulantes p
+                LEFT JOIN
+                    asistencias a ON p.id = a.postulante_id
+                WHERE
+                    p.programacion_id = " . $programacion->id . "
+                GROUP BY
+                    p.aula
+            ";
+        }
+
+        $asistencias =  DB::select($consultaSQL);
+        return view('reporte.rpt_asistencia_resumen', compact('programacion','asistencias'));
+    }
+    public function eliminar($idAsistencia)
+    {
+        Asistencia::find($idAsistencia)->delete();
     }
 }
