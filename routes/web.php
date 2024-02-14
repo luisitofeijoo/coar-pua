@@ -28,7 +28,7 @@ Route::get('/reporte/aula', [\App\Http\Controllers\AsistenciaController::class, 
 Route::get('/reporte/postulantes', [\App\Http\Controllers\AsistenciaController::class, 'reporte_postulantes']);
 Route::get('/reporte/postulantes/user', [\App\Http\Controllers\AsistenciaController::class, 'reporte_postulantes_user']);
 Route::get('/reporte/asistencia/resumen', [AsistenciaController::class, 'resumen_asistencia']);
-
+Route::get('/reporte/registro/asistencia-users', [AsistenciaController::class, 'reporte_registro_asistencia_users']);
 
 Route::get('postulantes', function () {
     $postulantes = \App\Models\Postulante::join('programacions', 'programacion_id', 'programacions.id')->orderBy('postulantes.id', 'DESC')->get();
@@ -44,3 +44,5 @@ Route::get('postulantes', function () {
     }
     echo '</table>';
 });
+
+Route::get('pdf/asistencia-resumen', [AsistenciaController::class, 'PDF_asistencia_resumen']);

@@ -180,7 +180,7 @@ export default function Asistencia() {
                                 <div className="content">
                                     <div className="columns is-vcentered">
                                         <div className="column is-three-quarters">
-                                            <p className="is-size-5">
+                                            <div className="is-size-5">
                                                 <strong>DNI:</strong> {asistencia.postulante.dni} <br/>
                                                 <span className={"is-size-1 is-uppercase is-block"}>{asistencia.postulante.nombres} {asistencia.postulante.apellidos}</span>
                                                 <strong>Local de aplicación:</strong> <br/>
@@ -195,7 +195,7 @@ export default function Asistencia() {
                                                         <span className="is-size-4"> {asistencia.programacion.fecha}</span> <br/>
                                                     </div>
                                                 </div>
-                                            </p>
+                                            </div>
                                         </div>
                                         <div className="column has-text-right has-text-centered-mobile is-one-quarter">
                                             <div className="has-text-right" style={{ lineHeight: '20px' }}>

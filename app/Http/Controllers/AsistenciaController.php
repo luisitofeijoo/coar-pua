@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Postulante;
 use App\Models\Asistencia;
 use App\Models\Programacion;
+use Barryvdh\DomPDF\Facade\Pdf;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +45,7 @@ class AsistenciaController extends Controller
 
                         // Retornar los datos del postulante y la asistencia
                         return response()->json([
-                            'mensaje' => 'DNI CORRECTO.',
+                            'mensaje' => 'DNI CORRECTO: REGISTRO REALIZADO. ',
                             'postulante' => $postulante,
                             'asistencia' => $asistencia,
                             'programacion' => $programacion,
@@ -166,5 +167,50 @@ class AsistenciaController extends Controller
     public function eliminar($idAsistencia)
     {
         Asistencia::find($idAsistencia)->delete();
+    }
+
+    public function reporte_registro_asistencia_users()
+    {
+        $programacion = Programacion::where('estado', 1)
+            ->first();
+        // Obtén el número de postulantes ingresados por aula (todos)
+        $users_asistencias = Postulante::join('asistencias', 'postulantes.id', '=', 'asistencias.postulante_id')
+            ->join('users', 'users.id', '=', 'asistencias.user_id')
+            ->select('users.name',\DB::raw('count(*) as registrados'))
+            ->where('postulantes.programacion_id', $programacion->id)
+            ->groupBy('asistencias.user_id')
+            ->orderBy('registrados', 'DESC')
+            ->get();
+
+
+       return view('reporte.rpt_registro_asistencia_users', compact('users_asistencias'));
+    }
+    public function PDF_asistencia_resumen()
+    {
+        $programacion = Programacion::where('estado', 1)
+            ->first();
+
+        if($programacion) {
+            $consultaSQL = "
+                SELECT
+                    p.aula,
+                    COUNT(p.id) as total_postulantes_habilitados,
+                    COUNT(a.id) as total_postulantes_con_asistencia,
+                    (COUNT(p.id) - COUNT(a.id)) as total_postulantes_faltantes
+                FROM
+                    postulantes p
+                LEFT JOIN
+                    asistencias a ON p.id = a.postulante_id
+                WHERE
+                    p.programacion_id = " . $programacion->id . "
+                GROUP BY
+                    p.aula
+            ";
+        }
+
+        $asistencias =  DB::select($consultaSQL);
+
+        $html = view('reporte.PDF_asistencia_resumen', compact('programacion','asistencias'));
+        return Pdf::loadHTML($html)->download();
     }
 }

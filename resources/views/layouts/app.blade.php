@@ -52,7 +52,10 @@
                     <ul>
                         <li><a href="{{ url('/reporte/postulantes/user') }}" class="{{ request()->is('reporte/postulantes/user') ? 'is-active' : '' }}">Mis asistencias registradas</a></li>
                         <li><a href="{{ url('/reporte/postulantes') }}" class="{{ request()->is('reporte/postulantes') ? 'is-active' : '' }}">Asistencia general de postulantes</a></li>
-                        <li><a href="{{ url('/reporte/aula') }}" class="{{ request()->is('reporte/aula') ? 'is-active' : '' }}">Asistencia por aulas</a></li>
+                        <li><a href="{{ url('/reporte/aula') }}" class="{{ request()->is('reporte/aula') ? 'is-active' : '' }}">Asistencia general por aulas</a></li>
+                        @role('admin')
+                        <li><a href="{{ url('/reporte/registro/asistencia-users') }}" class="{{ request()->is('reporte/registro/asistencia-users') ? 'is-active' : '' }}">Asistencias registradas por usuarios</a></li>
+                        @endrole
                         <li><a href="{{ url('/reporte/asistencia/resumen') }}" class="{{ request()->is('reporte/asistencia/resumen') ? 'is-active' : '' }}">Resumen general</a></li>
                     </ul>
                 </li>

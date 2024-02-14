@@ -26,23 +26,27 @@ class DatabaseSeeder extends Seeder
         $user = \App\Models\User::factory()->create([
             'name' => 'LUIS MIGUEL FEIJOO VALERIANO',
             'username' => '70757711',
-            'password' => Hash::make('12345')
+            'password' => Hash::make('coar2014')
         ]);
 
         $user->assignRole('admin');
 
-        \App\Models\User::factory()->create(['username' => '11111']);
-        \App\Models\User::factory()->create(['username' => '22222']);
-        \App\Models\User::factory()->create(['username' => '33333']);
-        \App\Models\User::factory()->create(['username' => '44444']);
-        \App\Models\User::factory()->create(['username' => '55555']);
-        \App\Models\User::factory()->create(['username' => '66666']);
-        \App\Models\User::factory()->create(['username' => '77777']);
-        \App\Models\User::factory()->create(['username' => '88888']);
-        \App\Models\User::factory()->create(['username' => '99999']);
-
-
-
+        \App\Models\User::factory()->create(['username' => 'user1']);
+        \App\Models\User::factory()->create(['username' => 'user2']);
+        \App\Models\User::factory()->create(['username' => 'user3']);
+        \App\Models\User::factory()->create(['username' => 'user4']);
+        \App\Models\User::factory()->create(['username' => 'user5']);
+        \App\Models\User::factory()->create(['username' => 'user6']);
+        \App\Models\User::factory()->create(['username' => 'user7']);
+        \App\Models\User::factory()->create(['username' => 'user8']);
+        \App\Models\User::factory()->create(['username' => 'user9']);
+        \App\Models\User::factory()->create(['username' => 'user10']);
+        \App\Models\User::factory()->create(['username' => 'user11']);
+        \App\Models\User::factory()->create(['username' => 'user12']);
+        \App\Models\User::factory()->create(['username' => 'user13']);
+        \App\Models\User::factory()->create(['username' => 'user14']);
+        \App\Models\User::factory()->create(['username' => 'user15']);
+        \App\Models\User::factory()->create(['username' => 'user16']);
 
         //Primera fecha de programacion
         /* ;*/
