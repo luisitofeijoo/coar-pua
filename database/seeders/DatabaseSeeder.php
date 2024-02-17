@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $user = \App\Models\User::factory()->create([
             'name' => 'LUIS MIGUEL FEIJOO VALERIANO',
             'username' => '70757711',
-            'password' => Hash::make('coar2014')
+            'password' => Hash::make('12345')
         ]);
 
         $user->assignRole('admin');
@@ -86,20 +86,24 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $FILE = public_path('POSTULANTE_POR_SITUACION.csv');
+        $FILE = public_path('LISTA_OFICIAL.csv');
         if (file_exists($FILE)) {
             $datos = array_map(function ($linea) {
                 return str_getcsv($linea, ';');
             }, file($FILE));
 
             foreach ($datos as $dato) {
-                $programacion = Programacion::where('sede', 'LIKE', '%' . $dato[0] . '%')->first();
+                $programacion = Programacion::where('sede', 'LIKE', '%' . $dato[3] . '%')->first();
 
                 if ($programacion) {
                     \App\Models\Postulante::factory()->create([
-                        'dni' => $dato[1],
-                        'nombres' => $dato[3],
-                        'apellidos' => $dato[2],
+                        'ubigeo_detalle' => $dato[0].' / '.$dato[1].' / '.$dato[2],
+                        'dni' => $dato[5],
+                        'nombres' => $dato[8],
+                        'apellidos' => $dato[6].' '.$dato[7],
+                        'aula' => $dato[11],
+                        'piso' => $dato[10],
+                        'pabellon' => $dato[9],
                         'programacion_id' => $programacion->id,
                     ]);
                 }

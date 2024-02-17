@@ -10,7 +10,7 @@
         @foreach($users_asistencias as $index => $r)
             <tr>
                 <td>{{ ++$index }}</td>
-                <td>{{ $r->name }}</td>
+                <td>{{ $r->username }}</td>
                 <td>{{ $r->registrados }}</td>
             </tr>
         @endforeach

@@ -31,7 +31,9 @@ Route::get('/reporte/asistencia/resumen', [AsistenciaController::class, 'resumen
 Route::get('/reporte/registro/asistencia-users', [AsistenciaController::class, 'reporte_registro_asistencia_users']);
 
 Route::get('postulantes', function () {
-    $postulantes = \App\Models\Postulante::join('programacions', 'programacion_id', 'programacions.id')->orderBy('postulantes.id', 'DESC')->get();
+    $postulantes = \App\Models\Postulante::join('programacions', 'programacion_id', 'programacions.id')
+        ->inRandomOrder()
+        ->get();
 
     echo '<table style="font-size:9px;width:100%">';
     foreach ($postulantes as $index => $postulante) {

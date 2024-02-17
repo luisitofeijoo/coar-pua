@@ -16,8 +16,10 @@ return new class extends Migration
             $table->char('dni', 20)->unique();
             $table->string('nombres',500)->nullable();
             $table->string('apellidos',500)->nullable();
-            $table->integer('aula');
-            $table->string('pabellon');
+            $table->char('aula')->nullable();
+            $table->char('piso')->nullable();
+            $table->char('pabellon')->nullable();
+            $table->string('ubigeo_detalle')->nullable();
             $table->foreignId('programacion_id')->constrained();
             $table->timestamps();
         });

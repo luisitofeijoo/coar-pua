@@ -3,7 +3,6 @@
 
 body {
     background: #ebeffc;
-    height: 100vh;
     font-family: Arial;
 }
 
@@ -11,19 +10,14 @@ body {
     flex: 1;
 }
 
-.square {
+.box {
     border: 1px solid #0f3fcb;
-    padding: 10px;
-    min-width: 160px;
+    padding: 20px 8px;
+    min-width: 50px;
     .text-size-aula {
-        font-size: 80px;
+        font-size: 45px;
     }
 }
-
-
-
-
-
 
 .lds-ellipsis {
     display: inline-block;

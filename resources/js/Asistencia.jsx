@@ -177,38 +177,49 @@ export default function Asistencia() {
                         </p>
                         <div className="card">
                             <div className="card-content">
-                                <div className="content">
+                                <div className="content pb-5">
                                     <div className="columns is-vcentered">
-                                        <div className="column is-three-quarters">
+                                        <div className="column">
                                             <div className="is-size-5">
                                                 <strong>DNI:</strong> {asistencia.postulante.dni} <br/>
-                                                <span className={"is-size-1 is-uppercase is-block"}>{asistencia.postulante.nombres} {asistencia.postulante.apellidos}</span>
+                                                <span className={"is-size-2 is-uppercase is-block mt-3 mb-3"} >{asistencia.postulante.nombres} <br/> {asistencia.postulante.apellidos}</span>
                                                 <strong>Local de aplicación:</strong> <br/>
                                                 <span className="is-size-4"> {asistencia.programacion.sede}</span> <br/>
+                                                <small>{ asistencia.postulante.ubigeo_detalle }</small>
                                                 <div className="columns">
-                                                    <div className="column">
+                                                 {/*   <div className="column">
                                                         <strong>Turno:</strong> <br/>
                                                         <span className="is-size-4"> {asistencia.programacion.turno}</span> <br/>
                                                     </div>
                                                     <div className="column">
                                                         <strong>Hora:</strong> <br/>
                                                         <span className="is-size-4"> {asistencia.programacion.fecha}</span> <br/>
-                                                    </div>
+                                                    </div>*/}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="column has-text-right has-text-centered-mobile is-one-quarter">
+                                        <div className="column has-text-right has-text-centered-mobile is-one-third">
                                             <div className="has-text-right" style={{ lineHeight: '20px' }}>
                                                 <small className="is-size-7 has-text-weight-bold">FECHA DE REGISTRO:</small> <br/>
                                                 <span className="is-size-5 has-text-weight-medium has-text-danger-dark"> {asistencia.asistencia?.fecha_asistencia?? 'No registrado'}</span> <br/>
                                             </div>
-                                            <div className="square  is-inline-block is-align-items-center m-2">
-                                                <p className="has-text-centered m-0 p-0 is-size-5">PABELLÓN</p>
-                                                <p className="has-text-centered text-size-aula m-0 p-0">{asistencia.postulante.pabellon}</p>
+                                            <div className="mt-5 box is-align-items-center is-full is-fullwidth">
+                                                <p className="has-text-centered m-0 p-0 is-size-6">PABELLÓN</p>
+                                                <p className="has-text-centered is-size-2-desktop is-size-3-tablet">{asistencia.postulante.pabellon}</p>
                                             </div>
-                                            <div className="square is-inline-block is-align-items-center m-2">
-                                                <p className="has-text-centered m-0 p-0 is-size-5">AULA</p>
-                                                <p className="has-text-centered text-size-aula m-0 p-0">{asistencia.postulante.aula}</p>
+                                            <div className="columns">
+                                                <div className="column is-6">
+                                                    <div className="box">
+                                                        <p className="has-text-centered m-0 p-0 is-size-6">PISO</p>
+                                                        <p className="has-text-centered is-size-2">{asistencia.postulante.piso}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="column is-6">
+                                                    <div className="box">
+                                                        <p className="has-text-centered m-0 p-0 is-size-6">AULA</p>
+                                                        <p className="has-text-centered is-size-2">{asistencia.postulante.aula}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

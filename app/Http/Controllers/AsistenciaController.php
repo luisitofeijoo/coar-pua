@@ -176,7 +176,7 @@ class AsistenciaController extends Controller
         // Obtén el número de postulantes ingresados por aula (todos)
         $users_asistencias = Postulante::join('asistencias', 'postulantes.id', '=', 'asistencias.postulante_id')
             ->join('users', 'users.id', '=', 'asistencias.user_id')
-            ->select('users.name',\DB::raw('count(*) as registrados'))
+            ->select('users.name','users.username',\DB::raw('count(*) as registrados'))
             ->where('postulantes.programacion_id', $programacion->id)
             ->groupBy('asistencias.user_id')
             ->orderBy('registrados', 'DESC')
